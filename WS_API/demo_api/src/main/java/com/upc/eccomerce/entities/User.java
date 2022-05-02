@@ -25,6 +25,4 @@ public class User {
     private Integer xp;
     @Column(name= "rangos_id", nullable = false)
     private Integer rank_id;
-    @Column(name= "premium", nullable = false)
-    private Boolean premium;
 }
