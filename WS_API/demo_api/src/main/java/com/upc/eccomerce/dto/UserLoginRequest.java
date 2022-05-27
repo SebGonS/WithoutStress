@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 public class UserLoginRequest {
@@ -13,4 +14,5 @@ public class UserLoginRequest {
     @NotNull
     @NotBlank
     private String hashcode;
+    private List<FriendsDetail> friends;
 }
