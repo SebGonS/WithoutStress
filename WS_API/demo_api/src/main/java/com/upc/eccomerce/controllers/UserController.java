@@ -3,6 +3,7 @@ package com.upc.eccomerce.controllers;
 import com.upc.eccomerce.dto.LoginResponse;
 import com.upc.eccomerce.dto.RegisterRequest;
 import com.upc.eccomerce.dto.UserLoginRequest;
+import com.upc.eccomerce.dto.UserResponse;
 import com.upc.eccomerce.entities.User;
 import com.upc.eccomerce.services.UserService;
 import com.upc.eccomerce.util.UsersDtoConverter;

@@ -75,4 +75,9 @@ public class UserService {
         friend.setUser2_id(user2.getId());
         return friendRepository.save(friend);
     }
+
+    @Transactional
+    public List<Integer> getFriends(Integer userId){
+        return friendRepository.findAlluser2_idByuser1_id(userId);
+    }
 }

@@ -14,5 +14,4 @@ public class UserLoginRequest {
     @NotNull
     @NotBlank
     private String hashcode;
-    private List<FriendsDetail> friends;
 }
