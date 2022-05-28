@@ -5,14 +5,12 @@ import com.upc.eccomerce.entities.Friend;
 import com.upc.eccomerce.entities.User;
 import com.upc.eccomerce.services.UserService;
 import com.upc.eccomerce.util.UsersDtoConverter;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@NoArgsConstructor
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -38,7 +36,7 @@ public class UserController {
     @GetMapping("/friends/{username}")
     public ResponseEntity<List<UserResponse>> getFriends(@PathVariable String username){
         List<User> friends = userService.getFriends(username);
-        return new ResponseEntity<>(converter.convertEntityToDto(friends), HttpStatus.OK);
+        return new ResponseEntity(converter.convertEntityToDto(friends), HttpStatus.OK);
     }
     @PostMapping("/addFriend")
     public ResponseEntity<FriendResponse> addFriend(@RequestBody FriendRequest request){

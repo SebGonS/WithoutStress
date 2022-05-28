@@ -10,7 +10,6 @@ import com.upc.eccomerce.exception.IncorrectOrderRequestException;
 import com.upc.eccomerce.exception.UserNotFoundException;
 import com.upc.eccomerce.repository.FriendRepository;
 import com.upc.eccomerce.repository.UserRepository;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
 @Service
 public class UserService {
 
@@ -82,12 +80,13 @@ public class UserService {
 
     @Transactional
     public List<User> getFriends(String username){
-        return getUser(friendRepository.findAllUser2IdByUser1Id(userRepository.findByUsername(username).getId()));
+        List<Integer> friends = friendRepository.findAllUser2IdByUser1Id(userRepository.findByUsername(username).getId());
+        return getUser(friends);
     }
-    public List<User> getUser(List<Integer> friends){
-        List userList = new ArrayList();
+    private List<User> getUser(List<Integer> friends){
+        List<User> userList = new ArrayList<>();
         for (Integer friend : friends) {
-            userList.add(userRepository.findUserById(friend));
+            userList.add(getUserById(friend));
         }
         return userList;
     }
