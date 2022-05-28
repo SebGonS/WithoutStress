@@ -1,12 +1,11 @@
 package com.upc.eccomerce.services;
 
 import com.upc.eccomerce.entities.Task;
-import com.upc.eccomerce.exception.OrderNotFoundException;
+import com.upc.eccomerce.exception.UserNotFoundException;
 import com.upc.eccomerce.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -19,7 +18,7 @@ public class TaskService {
 
     public Task getTaskById(Integer id){
         return taskRepository.findById(id)
-                .orElseThrow(()->new OrderNotFoundException("La actividad no existe"));
+                .orElseThrow(()->new UserNotFoundException("La actividad no existe"));
     }
 
     public Task createdTask(Task task){

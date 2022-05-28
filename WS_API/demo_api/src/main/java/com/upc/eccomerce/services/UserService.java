@@ -1,21 +1,24 @@
 package com.upc.eccomerce.services;
 
 
-import com.upc.eccomerce.dto.FriendsDetail;
 import com.upc.eccomerce.dto.RegisterRequest;
 import com.upc.eccomerce.dto.UserLoginRequest;
-import com.upc.eccomerce.dto.UserRequest;
+import com.upc.eccomerce.dto.FriendRequest;
 import com.upc.eccomerce.entities.Friend;
 import com.upc.eccomerce.entities.User;
 import com.upc.eccomerce.exception.IncorrectOrderRequestException;
+import com.upc.eccomerce.exception.UserNotFoundException;
 import com.upc.eccomerce.repository.FriendRepository;
 import com.upc.eccomerce.repository.UserRepository;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
 @Service
 public class UserService {
 
@@ -67,17 +70,25 @@ public class UserService {
         return user;
     }
     @Transactional
-    public Friend AgregarAmigo(UserRequest userRequest){
+    public Friend addFriend(FriendRequest friendRequest){
         Friend friend = new Friend();
-        User user1 = userRepository.findByUsername(userRequest.getUsername());
-        User user2 = userRepository.findByUsername(userRequest.getFriend().getUsername());
-        friend.setUser1_id(user1.getId());
-        friend.setUser2_id(user2.getId());
+        User user1 = userRepository.findByUsername(friendRequest.getUsername());
+                //.orElseThrow(() -> new UserNotFoundException("El usuario no existe"));
+        User user2 = userRepository.findByUsername(friendRequest.getFriend().getUsername());
+        friend.setUser1Id(user1.getId());
+        friend.setUser2Id(user2.getId());
         return friendRepository.save(friend);
     }
 
     @Transactional
-    public List<Integer> getFriends(Integer userId){
-        return friendRepository.findAlluser2_idByuser1_id(userId);
+    public List<User> getFriends(String username){
+        return getUser(friendRepository.findAllUser2IdByUser1Id(userRepository.findByUsername(username).getId()));
+    }
+    public List<User> getUser(List<Integer> friends){
+        List userList = new ArrayList();
+        for (Integer friend : friends) {
+            userList.add(userRepository.findUserById(friend));
+        }
+        return userList;
     }
 }

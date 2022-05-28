@@ -25,4 +25,5 @@ public class User {
     private Integer xp;
     @Column(name= "rangos_id", nullable = false)
     private Integer rank_id;
+
 }
