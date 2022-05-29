@@ -77,12 +77,16 @@ public class UserService {
             throw new IncorrectOrderRequestException("El contraseña incorrecta");
         }
         Friend friend = new Friend();
+        Friend friend1  = new Friend();
                 //.orElseThrow(() -> new UserNotFoundException("El usuario no existe"));
         User user2 = userRepository.findByUsername(friendRequest.getFriend().getUsername());
                 //.orElseThrow(() -> new UserNotFoundException("El usuario no existe"));
         friend.setUser1Id(user.getId());
         friend.setUser2Id(user2.getId());
-        return friendRepository.save(friend);
+        friend1.setUser1Id(user2.getId());
+        friend1.setUser2Id(user.getId());
+        friendRepository.save(friend);
+        return friendRepository.save(friend1);
     }
 
     @Transactional
