@@ -13,5 +13,5 @@ public class UserLoginRequest {
     private String username;
     @NotNull
     @NotBlank
-    private String hashcode;
+    private Integer hashcode;
 }

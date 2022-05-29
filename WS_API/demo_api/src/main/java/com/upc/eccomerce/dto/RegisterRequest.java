@@ -18,5 +18,5 @@ public class RegisterRequest {
     private String username;
     @NotBlank
     @NotNull
-    private String hash;
+    private Integer hash;
 }
