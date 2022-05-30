@@ -69,17 +69,16 @@ public class UserService {
     }
     @Transactional
     public Friend addFriend(FriendRequest friendRequest){
-        User user = userRepository.findByUsername(friendRequest.getUser().getUsername());
+        User user = userRepository.findByUsername(friendRequest.getUsername());
         if (user.getHashcode() == null) {
             throw new IncorrectOrderRequestException("El usuario no registrado");
         }
-        if (user.getHashcode() != friendRequest.getUser().getHashcode().hashCode()) {
+        if (user.getHashcode() != friendRequest.getHashcode().hashCode()) {
             throw new IncorrectOrderRequestException("El contraseña incorrecta");
         }
         Friend friend = new Friend();
         Friend friend1  = new Friend();
-                //.orElseThrow(() -> new UserNotFoundException("El usuario no existe"));
-        User user2 = userRepository.findByUsername(friendRequest.getFriend().getUsername());
+        User user2 = userRepository.findByUsername(friendRequest.getFriend_username());
                 //.orElseThrow(() -> new UserNotFoundException("El usuario no existe"));
         friend.setUser1Id(user.getId());
         friend.setUser2Id(user2.getId());
