@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Integer> {
+    Task findTaskById(Integer id);
 }
 
