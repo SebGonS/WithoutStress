@@ -2,10 +2,10 @@ package com.upc.eccomerce.controllers;
 
 import com.upc.eccomerce.dto.TaskResponse;
 import com.upc.eccomerce.entities.Task;
+import com.upc.eccomerce.services.TaskService;
 import com.upc.eccomerce.util.TaskDtoConverter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import com.upc.eccomerce.services.TaskService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +18,9 @@ public class TaskController {
     private TaskDtoConverter converter;
 
     public TaskController(TaskService taskService, TaskDtoConverter converter){
-            this.taskService = taskService;
-            this.converter = converter;
-        }
+        this.taskService = taskService;
+        this.converter = converter;
+    }
 
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody Task task){
@@ -37,9 +37,15 @@ public class TaskController {
         taskService.deleteTask(id);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<List<TaskResponse>> findAllRecycles(@PathVariable Integer id){
-        List<Task> tasks = (List<Task>) taskService.getTaskById(id);
+    /*@GetMapping("/{id}")
+    public ResponseEntity<List<TaskResponse>> findAllTask(@PathVariable Integer id){
+        List<Task> tasks = taskService.getTaskById(id);
+        return new ResponseEntity<>(converter.convertTaskToDto(tasks), HttpStatus.OK);
+    }*/
+
+    @GetMapping
+    public ResponseEntity<List<TaskResponse>> findAllTask(){
+        List<Task> tasks = taskService.findAllTask();
         return new ResponseEntity<>(converter.convertTaskToDto(tasks), HttpStatus.OK);
     }
 }

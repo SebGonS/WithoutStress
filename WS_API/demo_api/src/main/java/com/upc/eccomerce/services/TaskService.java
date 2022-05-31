@@ -1,13 +1,12 @@
 package com.upc.eccomerce.services;
 
 import com.upc.eccomerce.entities.Task;
-import com.upc.eccomerce.exception.OrderNotFoundException;
 import com.upc.eccomerce.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -16,6 +15,11 @@ public class TaskService {
 
     public TaskService(TaskRepository taskRepository){
         this.taskRepository = taskRepository;
+    }
+
+    @Transactional
+    public List<Task> findAllTask(){
+        return taskRepository.findAll();
     }
 
     @Transactional(readOnly = true)

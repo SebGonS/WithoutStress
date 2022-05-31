@@ -4,7 +4,6 @@ import com.upc.eccomerce.dto.TaskResponse;
 import com.upc.eccomerce.entities.Task;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.stream.Collectors;

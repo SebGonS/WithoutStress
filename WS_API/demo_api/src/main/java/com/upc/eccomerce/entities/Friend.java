@@ -12,7 +12,7 @@ public class Friend {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Integer id;
     @Column(name= "usuarios_Id", nullable = false)
-    private Integer user1_id;
+    private Integer user1Id;
     @Column(name= "usuarios_2_Id", nullable = false)
-    private Integer user2_id;
+    private Integer user2Id;
 }

@@ -1,7 +1,7 @@
 package com.upc.eccomerce.services;
 
 import com.upc.eccomerce.entities.Reto;
-import com.upc.eccomerce.exception.OrderNotFoundException;
+import com.upc.eccomerce.exception.UserNotFoundException;
 import com.upc.eccomerce.repository.RetosRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class RetosService {
 
     public Reto getRetoById(Integer id){
         return retosRepository.findById(id)
-                .orElseThrow(()->new OrderNotFoundException("La actividad grupal no existe"));
+                .orElseThrow(()->new UserNotFoundException("La actividad grupal no existe"));
     }
 
     public Reto createdRetos(Reto retos){
