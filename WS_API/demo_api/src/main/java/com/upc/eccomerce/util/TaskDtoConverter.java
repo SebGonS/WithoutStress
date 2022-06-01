@@ -1,5 +1,6 @@
 package com.upc.eccomerce.util;
 
+import com.upc.eccomerce.dto.TaskRequest;
 import com.upc.eccomerce.dto.TaskResponse;
 import com.upc.eccomerce.entities.Task;
 import org.modelmapper.ModelMapper;
@@ -27,4 +28,7 @@ public class TaskDtoConverter {
                 .collect(Collectors.toList());
     }
 
+    public Task convertDtoToEntity(TaskRequest taskRequest) {
+        return modelMapper.map(taskRequest, Task.class);
+    }
 }

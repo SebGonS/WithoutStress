@@ -1,20 +1,27 @@
 package com.upc.eccomerce.services;
 
+import com.upc.eccomerce.dto.TaskRequest;
 import com.upc.eccomerce.entities.Task;
+import com.upc.eccomerce.exception.OrderNotFoundException;
 import com.upc.eccomerce.repository.TaskRepository;
+import com.upc.eccomerce.util.TaskDtoConverter;
+import com.upc.eccomerce.validator.TaskValidator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
 
     private TaskRepository taskRepository;
+    private TaskDtoConverter converter;
 
-    public TaskService(TaskRepository taskRepository){
+    public TaskService(TaskRepository taskRepository, TaskDtoConverter converter){
         this.taskRepository = taskRepository;
+        this.converter=converter;
     }
 
     @Transactional
@@ -23,24 +30,40 @@ public class TaskService {
     }
 
     @Transactional(readOnly = true)
+    public List<Task> getAllTasks(){
+        return  taskRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Task> getAllTasksByName(String name){
+        return  taskRepository.findByNameContaining(name);
+    }
+
+    @Transactional(readOnly = true)
     public Task getTaskById(Integer id){
         return taskRepository.findTaskById(id);
     }
-
-    public Task createdTask(Task task){
+    @Transactional(readOnly = true)
+    public Optional getById(Integer id){
+        return Optional.ofNullable(taskRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Tarea no existe")));
+    }
+    public Task createdTask(TaskRequest taskRequest){
+        TaskValidator.validate(taskRequest);
+        Task task=converter.convertDtoToEntity(taskRequest);
         return taskRepository.save(task);
     }
 
-    public Task updateTask(Task task){
+    public Task updateTask(Integer id, TaskRequest taskRequest){
+        TaskValidator.validate(taskRequest);
 
-        Task taskFromDb = this.getTaskById(task.getId());
+        Task taskFromDb = taskRepository.findById(id)
+                .orElseThrow(() -> new OrderNotFoundException("Actividad no existe"));
 
-        taskFromDb.setId(task.getId());
-        taskFromDb.setName(task.getName());
-        taskFromDb.setSummary(task.getSummary());
-        taskFromDb.setUser_id(task.getUser_id());
+        taskFromDb.setName(taskRequest.getName());
+        taskFromDb.setSummary(taskRequest.getSummary());
+        taskFromDb.setUser_id(taskRequest.getUser_id());
 
-        return taskRepository.save(task);
+        return taskRepository.save(taskFromDb);
     }
     @Transactional
     public void deleteTask(Integer taskId){
