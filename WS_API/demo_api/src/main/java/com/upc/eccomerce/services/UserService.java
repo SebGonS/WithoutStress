@@ -78,6 +78,7 @@ public class UserService {
         }
         Friend friend = new Friend();
         Friend friend1  = new Friend();
+                //.orElseThrow(() -> new UserNotFoundException("El usuario no existe"));
         User user2 = userRepository.findByUsername(friendRequest.getFriend_username());
                 //.orElseThrow(() -> new UserNotFoundException("El usuario no existe"));
         friend.setUser1Id(user.getId());

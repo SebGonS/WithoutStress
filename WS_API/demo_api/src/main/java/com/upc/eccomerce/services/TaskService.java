@@ -2,7 +2,7 @@ package com.upc.eccomerce.services;
 
 import com.upc.eccomerce.dto.TaskRequest;
 import com.upc.eccomerce.entities.Task;
-import com.upc.eccomerce.exception.OrderNotFoundException;
+import com.upc.eccomerce.exception.TaskNotFoundException;
 import com.upc.eccomerce.repository.TaskRepository;
 import com.upc.eccomerce.util.TaskDtoConverter;
 import com.upc.eccomerce.validator.TaskValidator;
@@ -45,7 +45,7 @@ public class TaskService {
     }
     @Transactional(readOnly = true)
     public Optional getById(Integer id){
-        return Optional.ofNullable(taskRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Tarea no existe")));
+        return Optional.ofNullable(taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("Tarea no existe")));
     }
     public Task createdTask(TaskRequest taskRequest){
         TaskValidator.validate(taskRequest);
@@ -57,7 +57,7 @@ public class TaskService {
         TaskValidator.validate(taskRequest);
 
         Task taskFromDb = taskRepository.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException("Actividad no existe"));
+                .orElseThrow(() -> new TaskNotFoundException("Actividad no existe"));
 
         taskFromDb.setName(taskRequest.getName());
         taskFromDb.setSummary(taskRequest.getSummary());

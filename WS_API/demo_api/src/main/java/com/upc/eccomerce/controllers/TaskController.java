@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/annulation")
+@RequestMapping("/task")
 public class TaskController {
 
     private TaskService taskService;

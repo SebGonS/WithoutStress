@@ -1,6 +1,7 @@
 package com.upc.eccomerce.handler;
 
 import com.upc.eccomerce.exception.IncorrectOrderRequestException;
+import com.upc.eccomerce.exception.TaskNotFoundException;
 import com.upc.eccomerce.exception.UserNotFoundException;
 import com.upc.eccomerce.exception.OrderServiceExceptionResponse;
 import org.springframework.http.HttpStatus;
@@ -28,10 +29,15 @@ public class OrderServiceExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(response, response.getStatus());
     }
 
-
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Object> handleOrderNotFoundException(UserNotFoundException exception, WebRequest request) {
         OrderServiceExceptionResponse response = new OrderServiceExceptionResponse(exception.getMessage(), request.getDescription(false), HttpStatus.NOT_FOUND, LocalDateTime.now());
         return new ResponseEntity<>(response, response.getStatus());
     }
+
+    /*@ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Object> handleOrderNotFoundException(TaskNotFoundException exception, WebRequest request) {
+        OrderServiceExceptionResponse response = new OrderServiceExceptionResponse(exception.getMessage(), request.getDescription(false), HttpStatus.NOT_FOUND, LocalDateTime.now());
+        return new ResponseEntity<>(response, response.getStatus());
+    }*/
 }
